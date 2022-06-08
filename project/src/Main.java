@@ -1,5 +1,8 @@
+import movie.HTMLGenerator;
 import movie.MovieConverter;
 
+import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.net.URI;
 import java.net.http.HttpClient;
@@ -15,11 +18,11 @@ public class Main {
         HttpRequest httpRequest = HttpRequest.newBuilder()
                 .GET()
                 .uri(URI.create("https://imdb-api.com/en/API/Top250Movies/" + apiKey))
-                .timeout(Duration.ofSeconds(2))
+                .timeout(Duration.ofSeconds(5))
                 .build();
 
         HttpClient httpClient = HttpClient.newBuilder()
-                .connectTimeout(Duration.ofSeconds(2))
+                .connectTimeout(Duration.ofSeconds(5))
                 .followRedirects(HttpClient.Redirect.NORMAL) //Does not redirect https to http
                 .build();
 
@@ -28,6 +31,9 @@ public class Main {
 
         String json = httpResponse.body();
         String[] moviesArray = MovieConverter.parseJsonMovies(json);
-        MovieConverter.getMovies(moviesArray).forEach(element -> System.out.println(element));
+
+        HTMLGenerator html = new HTMLGenerator(new File("../html-css/index.html"),
+                new File("../html-css/style.css"));
+        html.generate(moviesArray);
     }
 }
