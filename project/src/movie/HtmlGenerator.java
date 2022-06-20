@@ -4,18 +4,19 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.List;
 
-public class HTMLGenerator {
+public class HtmlGenerator {
 
     private File html;
     private File css;
 
-    public HTMLGenerator(File html, File css) {
+    public HtmlGenerator(File html, File css) {
         this.html = html;
         this.css = css;
     }
 
-    public void generate(String[] moviesArray) {
+    public void generate(List<? extends Content> contents) {
         String start = """
                        <!DOCTYPE html>
                        <html lang="pt-br">
@@ -35,11 +36,11 @@ public class HTMLGenerator {
                       <body>
                           <h1 class="title">Top 250 IMDb Movies</h1>
                           <div class="container">
-                              <div class="row g-4 mb-3">                   
+                              <div class="row g-3">                   
                       """;
 
         String movies = """
-                                    <div class="col-12 col-sm-6 col-md-4 col-lg-3">                                                                    
+                                    <div class="col-6 col-sm-6 col-md-4 col-lg-3 col-xl-3">                                                                    
                                         <img class="card-image" src="%s" alt="%s">
                                         <div class="card-content">
                                             <h1>%s</h1> 
@@ -74,7 +75,7 @@ public class HTMLGenerator {
                     
                     .card-image {
                         width: 100%;
-                        height: 15.625rem;
+                        height: 15.625rem; /*250px*/
                         border-radius: 0.5rem 0.5rem 0 0;
                     }
                     
@@ -82,7 +83,7 @@ public class HTMLGenerator {
                         background-color: #ffffff;
                         padding: 0.625rem 0.625rem 1.25rem 0.625rem;
                         border-radius: 0 0 0.5rem 0.5rem; 
-                        height: 30%;                                                
+                        height: 9rem; /*144px*/                                                
                     }
                     
                     .container h1 {                      
@@ -102,13 +103,13 @@ public class HTMLGenerator {
             html.write(head);
             html.write(bodyStart);
 
-            for (var movie : MovieConverter.getMovies(moviesArray)) {
+            for (var content : contents) {
                 html.write(String.format(movies,
-                        movie.getImageUrl(),
-                        movie.getTitle(),
-                        movie.getTitle(),
-                        movie.getRating(),
-                        movie.getYear()));
+                        content.getImageUrl(),
+                        content.getTitle(),
+                        content.getTitle(),
+                        content.getRating(),
+                        content.getYear()));
             }
 
             html.write(bodyEnd);

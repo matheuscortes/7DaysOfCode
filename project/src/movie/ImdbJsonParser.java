@@ -7,9 +7,15 @@ import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-public class MovieConverter {
+public class ImdbJsonParser implements JsonParser {
 
-    public static String[] parseJsonMovies(String json) {
+    private String json;
+
+    public ImdbJsonParser(String json) {
+        this.json = json;
+    }
+
+    private String[] parseJsonMovies() {
         Pattern pattern = Pattern.compile("\\{\"items\":\\[\\{(.*)\\}\\].*\\}");
         Matcher matcher = pattern.matcher(json);
 
@@ -43,8 +49,10 @@ public class MovieConverter {
                 .collect(Collectors.toList());
     }
 
-    public static List<Movie> getMovies(String[] moviesArray) {
+    @Override
+    public List<? extends Content> parseResponseBody() {
         List<Movie> movies = new ArrayList<>();
+        String[] moviesArray = parseJsonMovies();
 
         for (int i = 0; i < moviesArray.length; i++) {
             Movie movie = new Movie(parseTitles(moviesArray).get(i),

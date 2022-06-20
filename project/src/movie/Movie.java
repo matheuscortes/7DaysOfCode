@@ -1,8 +1,8 @@
 package movie;
 
-public class Movie {
+public class Movie implements Content {
 
-    //Attributes
+    // Attributes
 
     private String title;
     private String imageUrl;
@@ -10,7 +10,7 @@ public class Movie {
     private String year;
 
 
-    //All parameters constructor
+    // All parameters constructor
 
     public Movie(String title, String imageUrl, String rating, String year) {
         this.title = title;
@@ -20,28 +20,31 @@ public class Movie {
     }
 
     @Override
+    public String getTitle() {
+        return title;
+    }
+
+    @Override
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    @Override
+    public String getRating() {
+        return rating;
+    }
+
+    @Override
+    public String getYear() {
+        return year;
+    }
+
+    @Override
     public String toString() {
-        return "title: " + title
+        return "title: " + year
                 + ", image-url: " + imageUrl
                 + ", rating: " + rating
                 + ", year: " + year;
     }
 
-    //Getters and setters
-
-    public String getTitle() {
-        return title;
-    }
-
-    public String getImageUrl() {
-        return imageUrl;
-    }
-
-    public String getRating() {
-        return rating;
-    }
-
-    public String getYear() {
-        return year;
-    }
 }
