@@ -1,6 +1,6 @@
 package movie;
 
-public interface Content {
+public interface Content extends Comparable<Content> {
 
     String getTitle();
     String getImageUrl();

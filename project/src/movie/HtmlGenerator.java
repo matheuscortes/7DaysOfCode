@@ -103,7 +103,7 @@ public class HtmlGenerator {
             html.write(head);
             html.write(bodyStart);
 
-            for (var content : contents) {
+            for (Content content : contents) {
                 html.write(String.format(movies,
                         content.getImageUrl(),
                         content.getTitle(),

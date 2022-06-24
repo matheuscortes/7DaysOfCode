@@ -1,6 +1,7 @@
 import movie.*;
 
 import java.io.File;
+import java.util.Comparator;
 import java.util.List;
 
 public class Main {
@@ -11,6 +12,8 @@ public class Main {
 
         String json = apiClient.getResponseBody();
         List<? extends Content> movies = new ImdbJsonParser(json).parseResponseBody();
+
+        movies.sort(Comparator.comparing(Content::getYear));
 
         HtmlGenerator html = new HtmlGenerator(new File("../html-css/index.html"),
                 new File("../html-css/style.css"));
