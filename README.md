@@ -8,8 +8,8 @@ O programa consome a API da IMDb e retorna o ranking dos top 250 filmes da empre
 
 ## Tecnologias utilizadas
 - Java
-
-## Como executar o projeto
+- HTML & CSS
+- Bootstrap
 
 ## Autor
 
